@@ -1,0 +1,11 @@
+name: programming
+channels:
+  - conda-forge
+dependencies:
+  - c-compiler
+  - cxx-compiler   # GTest is C++, so a C++ compiler is required to build tests
+  - cmake
+  - ninja
+  - make
+  - gdb
+  - gtest

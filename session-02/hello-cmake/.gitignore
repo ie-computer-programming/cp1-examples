@@ -1,0 +1,13 @@
+# CMake generates everything in here; it is disposable and must never be committed.
+build/
+
+# Compiled output
+*.o
+*.a
+*.so
+*.exe
+*.out
+
+# Editor / OS
+.vscode/
+.DS_Store
