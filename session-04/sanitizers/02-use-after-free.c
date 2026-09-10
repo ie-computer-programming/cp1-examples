@@ -2,7 +2,7 @@
  * Without a sanitizer this often "works" -- the freed memory usually still
  * holds the old bytes, right up until something else reuses it.
  *
- *   cc -g -fsanitize=address -o demo 02-asan-use-after-free.c && ./demo
+ *   cc -g -fsanitize=address -o demo 02-use-after-free.c && ./demo
  */
 #include <stdio.h>
 #include <stdlib.h>

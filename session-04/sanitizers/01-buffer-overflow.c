@@ -2,7 +2,7 @@
  * This is the HW1 `cp1_copy_bounded` lesson -- strcpy does not know how big
  * the destination is, and C will not stop it.
  *
- *   cc -g -fsanitize=address -o demo 01-asan-buffer-overflow.c && ./demo
+ *   cc -g -fsanitize=address -o demo 01-buffer-overflow.c && ./demo
  */
 #include <stdio.h>
 #include <string.h>

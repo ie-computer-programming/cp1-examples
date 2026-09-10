@@ -3,7 +3,7 @@
  * says to DETECT overflow rather than compute the sum and inspect it.
  * Signed overflow is undefined behaviour, so by then it is already too late.
  *
- *   cc -g -fsanitize=undefined -o demo 03-ubsan-signed-overflow.c && ./demo
+ *   cc -g -fsanitize=undefined -o demo 03-signed-overflow.c && ./demo
  */
 #include <limits.h>
 #include <stdio.h>

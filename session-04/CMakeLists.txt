@@ -32,21 +32,28 @@ target_link_libraries(test_stats PRIVATE stats GTest::gtest_main)
 add_test(NAME stats_tests COMMAND test_stats)
 
 # ------------------------------------------------------------- sanitizers
-# Deliberately buggy programs. A sanitizer must be given at BOTH compile and
-# link time, which is why each appears twice.
+# Each demo is built TWICE from the same source: once plain, once instrumented.
+# Run both -- the plain build is what makes the point, because it usually looks
+# like nothing is wrong.
+# A sanitizer must be given at BOTH compile and link time, hence each appears twice.
 if(NOT MSVC)
-  set(CP1_ASAN_DEMOS  01-asan-buffer-overflow 02-asan-use-after-free)
-  set(CP1_UBSAN_DEMOS 03-ubsan-signed-overflow)
+  set(CP1_ASAN_DEMOS  01-buffer-overflow 02-use-after-free)
+  set(CP1_UBSAN_DEMOS 03-signed-overflow)
+
+  foreach(demo IN LISTS CP1_ASAN_DEMOS CP1_UBSAN_DEMOS)
+    add_executable(${demo} sanitizers/${demo}.c)
+    target_compile_options(${demo} PRIVATE -g ${CP1_WARNINGS})
+  endforeach()
 
   foreach(demo IN LISTS CP1_ASAN_DEMOS)
-    add_executable(${demo} sanitizers/${demo}.c)
-    target_compile_options(${demo} PRIVATE -fsanitize=address -g ${CP1_WARNINGS})
-    target_link_options(${demo} PRIVATE -fsanitize=address)
+    add_executable(${demo}-asan sanitizers/${demo}.c)
+    target_compile_options(${demo}-asan PRIVATE -fsanitize=address -g ${CP1_WARNINGS})
+    target_link_options(${demo}-asan PRIVATE -fsanitize=address)
   endforeach()
 
   foreach(demo IN LISTS CP1_UBSAN_DEMOS)
-    add_executable(${demo} sanitizers/${demo}.c)
-    target_compile_options(${demo} PRIVATE -fsanitize=undefined -g ${CP1_WARNINGS})
-    target_link_options(${demo} PRIVATE -fsanitize=undefined)
+    add_executable(${demo}-ubsan sanitizers/${demo}.c)
+    target_compile_options(${demo}-ubsan PRIVATE -fsanitize=undefined -g ${CP1_WARNINGS})
+    target_link_options(${demo}-ubsan PRIVATE -fsanitize=undefined)
   endforeach()
 endif()

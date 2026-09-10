@@ -118,19 +118,47 @@ cc -g -fsanitize=address    -o demo prog.c    # ASan  -- memory errors
 cc -g -fsanitize=undefined  -o demo prog.c    # UBSan -- undefined behaviour
 ```
 
-All three demos are already wired up in `CMakeLists.txt`:
+Each demo is built **twice from the same source**: plain, and instrumented.
+Run both — the plain build is the one that makes the point.
+
+### 01 — writing past the end of a buffer
 
 ```console
-$ ./build/01-asan-buffer-overflow
+$ ./build/01-buffer-overflow                 # plain
+far too long for this
+Segmentation fault                           [exit 139]
+
+$ ./build/01-buffer-overflow-asan
 ERROR: AddressSanitizer: stack-buffer-overflow
-SUMMARY: ... 01-asan-buffer-overflow.c:15 in main
+SUMMARY: ... 01-buffer-overflow.c:15 in main
+```
 
-$ ./build/02-asan-use-after-free
+The plain build prints the string, *then* dies — and the crash tells you
+nothing about where the damage was done. ASan names the line.
+
+### 02 — using memory after freeing it
+
+```console
+$ ./build/02-use-after-free                  # plain
+673127556                                    [exit 0]
+
+$ ./build/02-use-after-free-asan
 ERROR: AddressSanitizer: heap-use-after-free
-SUMMARY: ... 02-asan-use-after-free.c:20 in main
+SUMMARY: ... 02-use-after-free.c:20 in main
+```
 
-$ ./build/03-ubsan-signed-overflow
-03-ubsan-signed-overflow.c:13:14: runtime error: signed integer overflow:
+**Exit code 0.** No crash, no warning — just a plausible-looking number that
+is not the 42 we stored. Run it again and you may get a different number.
+
+### 03 — signed overflow
+
+```console
+$ ./build/03-signed-overflow                 # plain
+INT_MAX     = 2147483647
+INT_MAX + 1 = -2147483648                    [exit 0]
+
+$ ./build/03-signed-overflow-ubsan
+03-signed-overflow.c:13:14: runtime error: signed integer overflow:
     2147483647 + 1 cannot be represented in type 'int'
 ```
 
@@ -138,9 +166,9 @@ Each maps onto something from HW1:
 
 | Demo | HW1 connection |
 |---|---|
-| `01-asan-buffer-overflow` | why `cp1_copy_bounded` exists and `strcpy` is a defect |
-| `02-asan-use-after-free` | freed memory usually still "works" — until it doesn't |
-| `03-ubsan-signed-overflow` | exactly why `cp1_add_checked` must **detect** overflow, not compute it |
+| `01-buffer-overflow` | why `cp1_copy_bounded` exists and `strcpy` is a defect |
+| `02-use-after-free` | freed memory usually still "works" — until it doesn't |
+| `03-signed-overflow` | exactly why `cp1_add_checked` must **detect** overflow, not compute it |
 
 ### Warnings, sanitizers, and what each catches
 
