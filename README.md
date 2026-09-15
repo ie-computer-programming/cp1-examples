@@ -27,6 +27,7 @@ Not set up yet, or missing a C++ compiler? See
 | [session-03/](session-03/) | Error handling and assertions — ten programs in bad/good pairs |
 | [session-04/](session-04/) | Unit testing with GTest, plus the sanitizers |
 | [session-06/](session-06/) | Pointers |
+| [session-07/](session-07/) | Dynamic memory — `malloc`/`free`, leaks, use-after-free, and the sanitizer that finds them |
 
 Each folder has its own `README.md` explaining what to run and what to look
 for. Start there.
