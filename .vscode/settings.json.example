@@ -1,0 +1,46 @@
+// Copy this file to .vscode/settings.json (same folder, drop the .example).
+// Your copy is git-ignored, so edits here are yours alone and survive `git pull`.
+//
+// Only needed if you build with the CMake Tools extension. Building from the
+// terminal (`cmake -S session-07 -B session-07/build`) needs none of this.
+{
+    // This repo is not one CMake project, it is one per session. Listing them
+    // all lets you switch with "CMake: Select Active Folder" (Cmd/Ctrl+Shift+P).
+    "cmake.sourceDirectory": [
+        "${workspaceFolder}/session-02/hello-cmake",
+        "${workspaceFolder}/session-03",
+        "${workspaceFolder}/session-04",
+        "${workspaceFolder}/session-06",
+        "${workspaceFolder}/session-07"
+    ],
+
+    // Give every session its own build folder. Without this they all share
+    // ${workspaceFolder}/build, and switching sessions fails with
+    // "does not match the source ... used to generate cache".
+    "cmake.buildDirectory": "${sourceDirectory}/build",
+
+    // Stop the active project from following whichever file you clicked last,
+    // which otherwise silently undoes "CMake: Select Active Folder".
+    "cmake.autoSelectActiveFolder": false
+
+    // ---------------------------------------------------------------------
+    // Only if builds fail with "Unable to configure the project" or
+    // "No usable generator found".
+    //
+    // That means VS Code was launched without the course environment active,
+    // so it cannot see cmake/ninja. The clean fix is to launch it from an
+    // activated shell instead:
+    //
+    //     conda activate programming
+    //     code /path/to/cp1-examples
+    //
+    // If you cannot do that, uncomment the block below and replace the path
+    // with the output of `conda activate programming && which cmake`
+    // (on Windows: `where cmake`), minus the trailing "/cmake".
+    // ---------------------------------------------------------------------
+    // ,"cmake.cmakePath": "/absolute/path/to/envs/programming/bin/cmake",
+    // "cmake.generator": "Ninja",
+    // "cmake.environment": {
+    //     "PATH": "/absolute/path/to/envs/programming/bin:${env:PATH}"
+    // }
+}

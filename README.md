@@ -18,6 +18,11 @@ conda activate programming
 Not set up yet, or missing a C++ compiler? See
 [session-02/SETUP-MACOS.md](session-02/SETUP-MACOS.md).
 
+Building with VS Code's **CMake Tools** extension rather than the terminal?
+Copy [.vscode/settings.json.example](.vscode/settings.json.example) to
+`.vscode/settings.json`. Each session folder is a separate CMake project, and
+without those settings they fight over a single build folder.
+
 ## What is here
 
 | | |

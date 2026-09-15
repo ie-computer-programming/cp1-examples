@@ -9,5 +9,7 @@ build-*/
 *.out
 
 # Editor / OS
-.vscode/
+# .vscode/* (not .vscode/) so the committed example below can be un-ignored
+.vscode/*
+!.vscode/settings.json.example
 .DS_Store
