@@ -34,6 +34,8 @@ without those settings they fight over a single build folder.
 | [session-06/](session-06/) | Pointers |
 | [session-07/](session-07/) | Dynamic memory — `malloc`/`free`, leaks, use-after-free, and the sanitizer that finds them |
 | [session-08/](session-08/) | Structures and unions — padding, ownership, shallow vs deep copy, tagged unions |
+| [session-09/](session-09/) | File I/O — `fopen`/`fgets`/`fclose`, streams, `argv`, exit codes |
+| [session-11/](session-11/) | Preprocessor and macros — include guards, parenthesisation, `#ifdef`, a debug logger |
 
 Each folder has its own `README.md` explaining what to run and what to look
 for. Start there.
