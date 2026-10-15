@@ -37,6 +37,8 @@ without those settings they fight over a single build folder.
 | [session-09/](session-09/) | File I/O — `fopen`/`fgets`/`fclose`, streams, `argv`, exit codes |
 | [session-11/](session-11/) | Preprocessor and macros — include guards, parenthesisation, `#ifdef`, a debug logger |
 | [session-12/](session-12/) | Bit manipulation — masks, shift traps, two's complement, flags, Morton codes, Quake's rsqrt |
+| [session-13/](session-13/) | Enums and typedef — enums are ints, X-macros, unit-safe structs, function pointers |
+| [session-14/](session-14/) | Linked lists — `Node **`, freeing safely, remove, reverse, array vs list measured |
 
 Each folder has its own `README.md` explaining what to run and what to look
 for. Start there.
