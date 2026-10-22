@@ -40,6 +40,7 @@ without those settings they fight over a single build folder.
 | [session-13/](session-13/) | Enums and typedef — enums are ints, X-macros, unit-safe structs, function pointers |
 | [session-14/](session-14/) | *Optional, not examined* — linked lists, covered fully in Data Structures & Algorithms |
 | [session-15/](session-15/) | Recursion and backtracking — stack frames, runaway recursion, memoisation, permutations, N-queens |
+| [session-16/](session-16/) | Threads — create/join, lifecycle, the `&i` bug, measured speed-up, a race to fix next time |
 
 Each folder has its own `README.md` explaining what to run and what to look
 for. Start there.
