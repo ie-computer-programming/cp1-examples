@@ -29,6 +29,7 @@ set(CP1_EXAMPLES
   03-good-lock-order
   04-semaphore-pool
   05-barrier
+  07-atomics
 )
 
 foreach(example IN LISTS CP1_EXAMPLES)

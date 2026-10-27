@@ -9,6 +9,7 @@
 04-semaphore-pool.c        8 workers, 3 connections: at most 3 at once
 05-barrier.c               nobody starts step 2 until everyone finishes step 1
 06-openmp.c                Session 16's parallel work in one #pragma
+07-atomics.c               atomic_fetch_add: a ticket dispenser, and what contention costs
 include/barrier_compat.h   pthread barriers for macOS, which lacks them
 ```
 
@@ -82,3 +83,23 @@ audit: done
 1 thread(s): 216816 primes in 0.7942 s
 8 thread(s): 216816 primes in 0.0928 s
 ```
+
+### 07 — an atomic is one indivisible step
+
+```console
+plain   1000000 tickets taken,  544000 duplicates   WRONG
+atomic  1000000 tickets taken,       0 duplicates   correct
+
+1 thread   0.0335 s   (nobody to fight with)
+4 threads  0.0804 s   (same total work, 2.4x slower)
+```
+
+`atomic_fetch_add` adds one and **returns the old value** in a single step, so
+every thread gets a different ticket. Plain `next++` is load, add, store, and
+over half the tickets were handed out twice. ThreadSanitizer reports
+`take_plain` and says nothing about `take_atomic`.
+
+The second half shows the cost: the same four million adds take longer when
+four threads share the variable, because the cores keep taking its memory
+away from each other. An atomic is cheaper than a mutex but not free, and it
+covers **one** operation on **one** variable. The exact ratios vary by machine.
