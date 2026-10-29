@@ -2,6 +2,7 @@
 
 ```text
 01-fork-basics.c               fork() returns twice; the child gets a COPY
+01-bad-no-flush.c              the same, without fflush: "before fork" prints twice when piped
 02-bad-zombie.c                a child nobody waits for: ps shows STAT Z
 02-good-wait.c                 waitpid + WIFEXITED / WIFSIGNALED (134 = 128 + 6)
 03-bad-exec-falls-through.c    no _exit after exec: two processes run on
@@ -35,12 +36,15 @@ build on native Windows.
 ### 01 — flush before you fork
 
 ```console
-$ ./build/01-fork-basics | cat        # with the fflush removed
-before fork: pid 129960, x = 100
-child : pid 129962, parent 129960, x = 101
-before fork: pid 129960, x = 100      <-- printed a second time
-parent: pid 129960, child was 129962, x = 100
+$ ./build/01-bad-no-flush | cat
+before fork: pid 137787, x = 100
+child : pid 137789, parent 137787, x = 101
+before fork: pid 137787, x = 100      <-- printed a second time
+parent: pid 137787, child was 137789, x = 100
 ```
+
+Run it on a terminal and you see no problem: it only shows when the output is
+piped. Then run `./build/01-fork-basics | cat`, which has the `fflush`.
 
 Piped, stdout is block-buffered (Session 9). The text was still in the buffer
 when `fork()` copied the process, so both processes flushed it.

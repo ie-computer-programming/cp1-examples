@@ -44,6 +44,6 @@ int main(void)
 
 /* Why the fflush: stdout is block-buffered when it is not a terminal
  * (Session 9). Anything still sitting in the buffer at fork() is copied into
- * the child, and BOTH processes flush it. Try removing the fflush and run
- *     ./01-fork-basics | cat
- * "before fork" appears twice. Flush before you fork. */
+ * the child, and BOTH processes flush it. Flush before you fork.
+ * See 01-bad-no-flush.c, which leaves this line out: run it piped through
+ * `cat` and "before fork" appears twice. */

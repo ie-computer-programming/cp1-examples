@@ -20,6 +20,7 @@ set(CP1_WARNINGS -Wall -Wextra)
 # next re-configure.
 set(CP1_EXAMPLES
   01-fork-basics
+  01-bad-no-flush
   02-bad-zombie
   02-good-wait
   03-bad-exec-falls-through
