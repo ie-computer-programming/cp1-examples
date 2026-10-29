@@ -42,6 +42,7 @@ without those settings they fight over a single build folder.
 | [session-15/](session-15/) | Recursion and backtracking — stack frames, runaway recursion, memoisation, permutations, N-queens |
 | [session-16/](session-16/) | Threads — create/join, lifecycle, the `&i` bug, measured speed-up, a race to fix next time |
 | [session-17/](session-17/) | Advanced threads — mutexes, atomics, check-then-act, deadlock, semaphores, barriers, OpenMP |
+| [session-18/](session-18/) | Processes and IPC — fork/exec/wait, zombies, pipes, shared memory, message queues, socketpair |
 
 Each folder has its own `README.md` explaining what to run and what to look
 for. Start there.
