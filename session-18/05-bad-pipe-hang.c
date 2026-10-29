@@ -6,7 +6,8 @@
  * end of that very pipe. Nobody can ever write again, and nobody knows it.
  *
  * The program does not crash. It stops, forever -- like Session 17's
- * deadlock. An alarm ends this demo after 2 seconds.
+ * deadlock. An alarm ends this demo after 2 seconds: the kernel sends
+ * SIGALRM to the PARENT, whose handler kills the stuck child and exits.
  */
 #include <signal.h>
 #include <stdio.h>
@@ -15,11 +16,16 @@
 #include <sys/wait.h>
 #include <unistd.h>
 
+static volatile pid_t child_pid;
+
 static void timeout(int sig)
 {
     (void)sig;
     static const char msg[] = "HUNG: the child is still waiting for data -- killed by alarm\n";
     write(STDERR_FILENO, msg, sizeof msg - 1);
+    if (child_pid > 0) {
+        kill(child_pid, SIGKILL);       /* the alarm only reaches us, not the child */
+    }
     _exit(1);
 }
 
@@ -42,6 +48,7 @@ int main(void)
         exit(0);                        /* never reached: read() never returns 0 */
     }
 
+    child_pid = pid;                    /* so the alarm handler can clean up */
     write(fd[1], "hello", 5);
     close(fd[1]);                       /* the parent's copy is closed ... */
     waitpid(pid, NULL, 0);              /* ... but the child's is not */
